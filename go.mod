@@ -51,7 +51,7 @@ require (
 	golang.org/x/oauth2 v0.0.0-20190212230446-3e8b2be13635 // indirect
 	golang.org/x/perf v0.0.0-20190124201629-844a5f5b46f4 // indirect
 	golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a // indirect
-	golang.org/x/tools v0.0.0-20190214204934-8dcb7bc8c7fe // indirect
+	golang.org/x/tools v0.0.0-20190219035721-0a7d439b5fa8 // indirect
 	google.golang.org/genproto v0.0.0-20190215211957-bd968387e4aa // indirect
 	google.golang.org/grpc v1.18.0 // indirect
 	gopkg.in/urfave/cli.v1 v1.20.0

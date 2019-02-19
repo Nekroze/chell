@@ -1,10 +1,9 @@
 package tplex
 
 import (
-	"math/rand"
+	"fmt"
 	"os"
 	"os/exec"
-	"time"
 
 	"github.com/Nekroze/chell/pkg/config"
 )
@@ -12,7 +11,6 @@ import (
 var exename string
 
 func init() {
-	rand.Seed(time.Now().UnixNano())
 	var err error
 	exename, err = os.Executable()
 	if err != nil {
@@ -22,6 +20,7 @@ func init() {
 
 func tmux(args ...string) error {
 	if config.TerminalMultiplexingDisabled {
+		fmt.Println(args)
 		return nil
 	}
 	return exec.Command("tmux", args...).Run()

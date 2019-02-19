@@ -18,19 +18,10 @@ func Entrypoint() {
 	app.Version = "0.0.1"
 
 	app.Flags = []cli.Flag{
-
-		cli.StringFlag{
-			Name:        "instance, i",
-			Value:       "",
-			Usage:       "start as a child of the given instance",
-			Destination: &config.InstanceID,
-		},
-
-		cli.IntFlag{
-			Name:        "screen, s",
-			Value:       0,
-			Usage:       "screen ID of the child instance",
-			Destination: &config.ScreenID,
+		cli.BoolFlag{
+			Name:        "child, c",
+			Usage:       "start as a child, splits tmux but does not start it",
+			Destination: &config.Child,
 		},
 	}
 
@@ -39,16 +30,11 @@ func Entrypoint() {
 	}
 }
 
-func eMain(c *cli.Context) error {
-	if config.InstanceID == "" && !config.TerminalMultiplexingDisabled {
-		if e := tplex.NewTmux(); e != nil {
-			panic(e)
-		}
-		if e := tplex.Attach(); e != nil {
-			panic(e)
-		}
-	} else {
+func eMain(c *cli.Context) (err error) {
+	if config.Child || config.TerminalMultiplexingDisabled {
 		repl.Run()
+	} else {
+		err = tplex.NewTmux()
 	}
-	return nil
+	return err
 }

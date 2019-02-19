@@ -1,7 +1,7 @@
 #!/usr/bin/env nix-shell
 #!nix-shell -p go ragel -i ./.make
 
-.PHONY: dev binary docker test regen run clean deps depunpin depupdate
+.PHONY: dev binary dockerun image test regen run clean deps depunpin depupdate
 
 ## Variables
 
@@ -36,11 +36,13 @@ clean:
 
 regen: clean $(GENERATED_FILES)
 
-docker: image
+image:
 	docker build --force-rm --pull --tag nekroze/chell:latest .
+
+dockerun: $(GO_FILES)
 	docker run -it --rm nekroze/chell:latest
 
-test: Dockerfile $(GO_FILES)
+test: $(GO_FILES)
 	docker build --force-rm --pull --tag nekroze/chell:tests --target test .
 	docker run -it --rm nekroze/chell:tests
 
