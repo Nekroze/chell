@@ -20,8 +20,30 @@ make docker
 
 ## Portals?
 
-Yes portals! and by that I mean that long running commands are popped into their own terminal split and a new `chell` gets spawned for continued shell usage. When the commands in a portal finish an exit report is displayed, keeping the split open until a user acknowledges the exit report.
+Yes portals! And by that I mean that long running commands are popped into their own terminal split and a new `chell` gets spawned for continued flow of execution.
 
 ## Exit Reports?
 
-Most shells by default silently record the exit code of command that are executed however this is not typically displayed unless the user sets up a custom prompt that displays it. When using `chell` this information is surfaced at the end of a portal command or when a normal command fails via an exit report along with other information such as how long the execution took
+Most shells by default silently record the exit code of command that are executed however this is not typically displayed unless the user sets up a custom prompt. When using `chell` this information is surfaced at the end of command failure via an exit report along with other information such as how long the execution took.
+
+## POSIX?
+
+That is the plan, although the approach will be incremental.
+
+### Roadmap
+
+Current Status: Proof of Concept
+
+- [x] Command execution
+- [x] Multiple commands via `;` delimiter
+- [x] Environment variable interpolation
+- [ ] Pipes
+- [ ] Functions
+- [ ] Builtins
+- [ ] Expressions
+- [ ] Conditionals
+- [ ] Loops
+- [ ] Comments
+- [ ] Functions
+- [ ] Aliases
+- [ ] Shell options (eg. `set -x`)
