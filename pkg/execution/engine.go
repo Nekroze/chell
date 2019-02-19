@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"os/signal"
 	"strings"
 	"syscall"
 	"time"
@@ -57,7 +56,7 @@ func Muxecute(head string, tail ...string) error {
 	}()
 
 	select {
-	case <-time.After(5 * time.Second):
+	case <-time.After(2 * time.Second):
 		if e := tplex.Split(false); e != nil {
 			os.Stderr.WriteString(e.Error())
 		}
@@ -67,14 +66,10 @@ func Muxecute(head string, tail ...string) error {
 
 	err := <-errChan
 
-	if err != nil {
-		fmt.Println("command exit: ", err)
+	if exitError, ok := err.(*exec.ExitError); ok {
+		ws := exitError.Sys().(syscall.WaitStatus)
+		fmt.Println("Exit Report")
+		fmt.Println("exit:", ws.ExitStatus())
 	}
-
-	sigchan := make(chan os.Signal, 1)
-	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
-	<-sigchan
-
-	os.Exit(0)
-	return nil
+	return err
 }
